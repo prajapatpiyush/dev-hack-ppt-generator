@@ -13,10 +13,10 @@ load_dotenv()
 app = Flask(__name__)
 
 # Get API key from environment variable
-GEMINI_API_KEY = os.getenv("AIzaSyBH56PyDaamtTnbK5-_7vWSShpxNd-WVeY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 if not GEMINI_API_KEY:
-    raise ValueError("❌ GEMINI_API_KEY environment variable is not set. Check your .env file.")
+    raise ValueError(" GEMINI_API_KEY environment variable is not set. Check your .env file.")
 
 # Configure Gemini API with the loaded key
 genai.configure(api_key=GEMINI_API_KEY)
@@ -28,7 +28,7 @@ def generate_ai_content(prompt):
         response = model.generate_content(prompt)
         return response.text
     except Exception as e:
-        print(f"🔥 AI Error: {str(e)}")
+        print(f" AI Error: {str(e)}")
         raise Exception(f"Failed to generate AI content: {str(e)}")
 
 def apply_theme(prs, theme):
@@ -109,7 +109,7 @@ def create_ppt(title, content_list):
         prs.save(ppt_filename)
         return ppt_filename, selected_theme
     except Exception as e:
-        print(f"🔥 PPT Creation Error: {str(e)}")
+        print(f" PPT Creation Error: {str(e)}")
         raise Exception(f"Failed to create PowerPoint presentation: {str(e)}")
 
 @app.route("/")
@@ -140,11 +140,11 @@ def generate_ppt():
         return jsonify({
             "file": ppt_filename,
             "theme": selected_theme,
-            "message": "✅ AI-Generated PPT Successfully!"
+            "message": " AI-Generated PPT Successfully!"
         })
     
     except Exception as e:
-        print(f"🔥 Error: {str(e)}")
+        print(f" Error: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 @app.route("/download_ppt")
@@ -156,7 +156,7 @@ def download_ppt():
         
         return send_file(ppt_filename, as_attachment=True)
     except Exception as e:
-        print(f"🔥 Download Error: {str(e)}")
+        print(f" Download Error: {str(e)}")
         return jsonify({"error": "Failed to download presentation"}), 500
 
 if __name__ == "__main__":
